@@ -4,6 +4,7 @@ import 'react-bootstrap-table/css/react-bootstrap-table.min.css'
 
 var $ = require("jquery");
 
+
 class TxtResultList extends React.Component{
 	constructor(props) {
 		super(props);
@@ -36,8 +37,8 @@ class TxtResultList extends React.Component{
 		];
 		var result_items = this.state.results.map(
 					(result) => {
-						var reslink = "http://localhost:5984/_utils/result-viewer.html?" + result.value[0];
-						var peflink = "http://localhost:5984/_utils/perfchart.html?" + result.value[0];
+						var reslink = "http://10.50.100.213:5984/_utils/result-viewer.html?" + result.value[0];
+						var peflink = "http://10.50.100.213:5984/_utils/perfchart.html?" + result.value[0];
 						return {
 						"Test Name": <div><a target="_blank" href={reslink}>{result.value[0]}</a><br/><a target="_blank" href={peflink}>Performance</a></div>,
 						"Branch": result.value[1],
@@ -85,7 +86,7 @@ class TxtResultList extends React.Component{
 		return (
 				<div className='myclass'>
 				<div>{this.state.action}</div>
-				<BootstrapTable data={result_items} pagination={"20"} columnFilter={true} striped={true} hover={true} condensed={true}>
+				<BootstrapTable data={result_items} pagination={true} columnFilter={true} striped={true} hover={true}>
 					<TableHeaderColumn dataField="Test Name" isKey={true} dataSort={true} width="15%">Test Name</TableHeaderColumn>
 					<TableHeaderColumn dataField="Branch" width="5%" dataSort={true}>Branch</TableHeaderColumn>
 					<TableHeaderColumn dataField="ACP Build" width="10%" dataSort={true} sortFunc={sortBuild}>ACP Build</TableHeaderColumn>
@@ -99,5 +100,5 @@ class TxtResultList extends React.Component{
 	}
 }
 
-TxtResultList.defaultProps = {action: 'Loading...', source: 'http://localhost:5984/txt_results/_design/txtbrowser/_view/txtbrowser?reduce=false'};
+TxtResultList.defaultProps = {action: 'Loading...', source: 'http://10.50.100.213:5984/txt_results/_design/txtbrowser/_view/txtbrowser?reduce=false'};
 export default TxtResultList;
