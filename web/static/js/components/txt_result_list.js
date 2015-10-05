@@ -10,27 +10,13 @@ var $ = require("jquery");
 class TxtResultList extends React.Component{
 	constructor(props) {
 		super(props);
-//		this.state = {
-//			action: props.action,
-//			results: []
-//		};
 	}
 
 	componentDidMount() {
         this.props.dispatch(fetchTxtRv());
-//		$.get(this.props.source, function(result) {
-//			result = JSON.parse(result);
-//			result = result.rows;
-//			this.setState({
-//				action: 'Results loaded.',
-//				results: result
-//			});
-//		}.bind(this));
 	}
 
 	render() {
-
-
 		var columns = [
 			{name:"Test Name"},
 			{name:"Branch"},
@@ -114,6 +100,3 @@ function select(state) {
 }
 
 export default connect(select)(TxtResultList);
-
-//TxtResultList.defaultProps = {action: 'Loading...', source: 'http://10.50.100.213:5984/txt_results/_design/txtbrowser/_view/txtbrowser?reduce=false'};
-//export default TxtResultList;
