@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {fetchTxtRv} from '../actions/txt_results'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import 'react-bootstrap-table/css/react-bootstrap-table.min.css'
 
@@ -8,24 +10,27 @@ var $ = require("jquery");
 class TxtResultList extends React.Component{
 	constructor(props) {
 		super(props);
-		this.state = {
-			action: props.action,
-			results: []
-		};
+//		this.state = {
+//			action: props.action,
+//			results: []
+//		};
 	}
 
 	componentDidMount() {
-		$.get(this.props.source, function(result) {
-			result = JSON.parse(result);
-			result = result.rows;
-			this.setState({
-				action: 'Results loaded.',
-				results: result
-			});
-		}.bind(this));
+        this.props.dispatch(fetchTxtRv());
+//		$.get(this.props.source, function(result) {
+//			result = JSON.parse(result);
+//			result = result.rows;
+//			this.setState({
+//				action: 'Results loaded.',
+//				results: result
+//			});
+//		}.bind(this));
 	}
 
 	render() {
+
+
 		var columns = [
 			{name:"Test Name"},
 			{name:"Branch"},
@@ -35,7 +40,11 @@ class TxtResultList extends React.Component{
 			{name:"Test Suit"},
 			{name:"Pass Ratio"}
 		];
-		var result_items = this.state.results.map(
+		var result = this.props.items.rows;
+		if(result === undefined){
+			result = [];
+		}
+		var result_items = result.map(
 					(result) => {
 						var reslink = "http://10.50.100.213:5984/_utils/result-viewer.html?" + result.value[0];
 						var peflink = "http://10.50.100.213:5984/_utils/perfchart.html?" + result.value[0];
@@ -85,7 +94,6 @@ class TxtResultList extends React.Component{
 			}
 		return (
 				<div className='myclass'>
-				<div>{this.state.action}</div>
 				<BootstrapTable data={result_items} pagination={true} columnFilter={true} striped={true} hover={true}>
 					<TableHeaderColumn dataField="Test Name" isKey={true} dataSort={true} width="15%">Test Name</TableHeaderColumn>
 					<TableHeaderColumn dataField="Branch" width="5%" dataSort={true}>Branch</TableHeaderColumn>
@@ -100,5 +108,12 @@ class TxtResultList extends React.Component{
 	}
 }
 
-TxtResultList.defaultProps = {action: 'Loading...', source: 'http://10.50.100.213:5984/txt_results/_design/txtbrowser/_view/txtbrowser?reduce=false'};
-export default TxtResultList;
+
+function select(state) {
+    return state.loadTxtRv;
+}
+
+export default connect(select)(TxtResultList);
+
+//TxtResultList.defaultProps = {action: 'Loading...', source: 'http://10.50.100.213:5984/txt_results/_design/txtbrowser/_view/txtbrowser?reduce=false'};
+//export default TxtResultList;

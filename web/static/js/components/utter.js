@@ -22,6 +22,7 @@ class Utter extends React.Component{
     }
 
     render() {
+        console.log(this.props);
         const { dispatch, projects, results, activeProjectId } = this.props;
 
         var key = 0;
