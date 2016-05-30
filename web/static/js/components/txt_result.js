@@ -79,6 +79,7 @@ class TxtRv extends React.Component{
         );
 
         var labels = [];
+        /*
         if(tags.indexOf('TS') != -1){
             labels.push('TS');
         }
@@ -87,12 +88,15 @@ class TxtRv extends React.Component{
         }
         else{
             labels.push(tags);
-        }
+        }*/
         if(tags.indexOf('[') != -1 && tags.indexOf(']') != -1){
+            labels.push(tags.substring(0, tags.indexOf('[')));
             var tags_string = tags.substring(tags.indexOf('[')+1, tags.indexOf(']'));
             tags_string = tags_string.replace('/\s/g', '');
             var tags_array = tags_string.split(',');
             labels = labels.concat(tags_array);
+        } else {
+            labels.push(tags);
         }
         var label_selected = {};
         for(var label of labels){
