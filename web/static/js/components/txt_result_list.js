@@ -25,7 +25,6 @@ class TxtResultList extends React.Component{
 	componentDidMount() {
         this.props.dispatch(fetchTxtRv());
         this.props.dispatch(setDateInfo(moment().subtract(29,'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')));
-        console.log(this.props.updateInterval);
         this.timer = setInterval(() => this.props.dispatch(fetchTxtRv()), this.props.updateInterval);
 	}
 
@@ -331,7 +330,8 @@ function createRows(result, filter, startDate, endDate, name, rstp, tag, ratio){
 				var testSuit = result.value[5];
 
 				var date = formatDate(TestName);
-				return [passed/total, TestName, ACPBuild, ACPIP, RSTPBuild, testSuit, passRatio, date];
+                var rev = result.value[7];
+				return [passed/total, TestName, ACPBuild, ACPIP, RSTPBuild, testSuit, passRatio, date, rev];
 			}
 		);
 		rows = filterByDate(rows, startDate, endDate);
